@@ -36,9 +36,9 @@ export function WalletConnectButton({
           {formatAddress(address)}
         </Button>
         {menuOpen ? (
-          <div className="absolute right-0 mt-2 w-44 rounded-md border border-ink-200 bg-white shadow-soft z-50 overflow-hidden">
+          <div className="absolute right-0 mt-2 w-44 rounded-md border border-ink-200 bg-white shadow-soft z-50 overflow-hidden dark:border-white/12 dark:bg-night-800 dark:shadow-glow-sm">
             <button
-              className="block w-full px-4 py-2 text-left text-sm text-ink-700 hover:bg-ink-50"
+              className="block w-full px-4 py-2 text-left text-sm text-ink-700 hover:bg-ink-50 dark:text-white/80 dark:hover:bg-white/5"
               onClick={() => {
                 setMenuOpen(false);
                 openAppKit("Account");
@@ -47,7 +47,7 @@ export function WalletConnectButton({
               Account
             </button>
             <button
-              className="block w-full px-4 py-2 text-left text-sm text-ink-700 hover:bg-ink-50"
+              className="block w-full px-4 py-2 text-left text-sm text-ink-700 hover:bg-ink-50 dark:text-white/80 dark:hover:bg-white/5"
               onClick={() => {
                 setMenuOpen(false);
                 disconnect();

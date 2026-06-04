@@ -16,10 +16,110 @@ body {
 
 body {
   @apply bg-ink-50 text-ink-800 antialiased;
+  @apply dark:bg-night-950 dark:text-ink-100;
   font-family: var(--font-sans);
+}
+
+/*
+ * Smooth, global theme transition (no FOUC: the theme class is set pre-paint,
+ * so nothing animates on first load). Deliberately excludes opacity + transform
+ * so it never interferes with Framer Motion entrance/particle animations.
+ */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow, text-decoration-color;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Reown AppKit modal sits above everything */
 w3m-modal {
   z-index: 100;
+}
+
+/* --- Landing experience (dark, Fhenix-inspired) --- */
+
+/* Subtle privacy/security grid that gently drifts upward. */
+.landing-grid {
+  background-image: linear-gradient(
+      to right,
+      rgba(13, 148, 136, 0.07) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(13, 148, 136, 0.07) 1px,
+      transparent 1px
+    );
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 42%,
+    #000 30%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 42%,
+    #000 30%,
+    transparent 78%
+  );
+}
+
+/*
+ * Light-mode aurora: a dedicated atmosphere (soft cyan glow from the top + a
+ * faint teal accent) that gives the off-white surface depth and life.
+ */
+.landing-aurora {
+  background: radial-gradient(
+      70% 55% at 50% -8%,
+      rgba(34, 211, 238, 0.13) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      42% 42% at 84% 12%,
+      rgba(13, 148, 136, 0.08) 0%,
+      transparent 72%
+    );
+}
+
+/*
+ * Soft elevated cyan glow behind the logo. Kept theme-agnostic (same in light
+ * + dark) so it doesn't "snap" during the theme transition.
+ */
+.landing-glow {
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(34, 211, 238, 0.13) 0%,
+    rgba(6, 182, 212, 0.05) 28%,
+    transparent 62%
+  );
+}
+
+/* Gradient text for the wordmark (theme-aware). */
+.landing-wordmark {
+  background-image: linear-gradient(
+    180deg,
+    #0b1220 0%,
+    #1c2433 45%,
+    #5b6478 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .landing-wordmark {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #eef4f5 45%,
+    #9fb3b8 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-grid-drift,
+  .animate-pulse-glow {
+    animation: none !important;
+  }
 }

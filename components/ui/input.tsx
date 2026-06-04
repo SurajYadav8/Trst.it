@@ -19,19 +19,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       {label ? (
         <label
           htmlFor={inputId}
-          className="block text-sm font-medium text-ink-700 mb-1.5"
+          className="block text-sm font-medium text-ink-700 mb-1.5 dark:text-white/70"
         >
           {label}
         </label>
       ) : null}
       <div
         className={cn(
-          "flex items-center rounded-md border bg-white transition-colors focus-within:ring-2 focus-within:ring-brand-500/40 focus-within:border-brand-500",
-          error ? "border-danger-500" : "border-ink-200"
+          "flex items-center rounded-md border bg-white transition-colors focus-within:ring-2 focus-within:ring-brand-500/40 focus-within:border-brand-500 dark:bg-white/[0.04] dark:focus-within:ring-accent-400/30 dark:focus-within:border-accent-400/60",
+          error
+            ? "border-danger-500"
+            : "border-ink-200 dark:border-white/12"
         )}
       >
         {prefix ? (
-          <span className="pl-3 text-ink-400 text-sm select-none">
+          <span className="pl-3 text-ink-400 text-sm select-none dark:text-white/40">
             {prefix}
           </span>
         ) : null}
@@ -39,22 +41,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           ref={ref}
           id={inputId}
           className={cn(
-            "flex-1 bg-transparent px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none",
+            "flex-1 bg-transparent px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none dark:text-white dark:placeholder:text-white/35",
             className
           )}
           {...rest}
         />
         {suffix ? (
-          <span className="pr-3 text-ink-400 text-sm select-none">
+          <span className="pr-3 text-ink-400 text-sm select-none dark:text-white/40">
             {suffix}
           </span>
         ) : null}
       </div>
       {hint && !error ? (
-        <p className="mt-1.5 text-xs text-ink-500">{hint}</p>
+        <p className="mt-1.5 text-xs text-ink-500 dark:text-white/45">{hint}</p>
       ) : null}
       {error ? (
-        <p className="mt-1.5 text-xs text-danger-700">{error}</p>
+        <p className="mt-1.5 text-xs text-danger-700 dark:text-danger-500">
+          {error}
+        </p>
       ) : null}
     </div>
   );

@@ -28,15 +28,15 @@ export function PageHeading({
     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
       <div>
         {eyebrow ? (
-          <div className="text-xs font-medium uppercase tracking-wider text-brand-600 mb-2">
+          <div className="text-xs font-medium uppercase tracking-wider text-brand-600 mb-2 dark:text-accent-300">
             {eyebrow}
           </div>
         ) : null}
-        <h1 className="text-2xl font-semibold tracking-tight text-ink-900">
+        <h1 className="text-2xl font-semibold tracking-tight text-ink-900 dark:text-white">
           {title}
         </h1>
         {description ? (
-          <p className="text-sm text-ink-500 mt-1.5 max-w-2xl">
+          <p className="text-sm text-ink-500 mt-1.5 max-w-2xl dark:text-white/50">
             {description}
           </p>
         ) : null}

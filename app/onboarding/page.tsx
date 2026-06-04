@@ -81,7 +81,7 @@ function Onboarding() {
           <CardBody>
             {!isConnected ? (
               <div className="text-center py-6">
-                <p className="text-sm text-ink-600 mb-4">
+                <p className="text-sm text-ink-600 mb-4 dark:text-white/60">
                   Connect your wallet to continue.
                 </p>
                 <WalletConnectButton />
@@ -104,14 +104,14 @@ function Onboarding() {
                 </div>
 
                 {user === null ? (
-                  <div className="mt-6 rounded-md bg-ink-50 border border-ink-100 p-3 text-xs text-ink-600">
+                  <div className="mt-6 rounded-md bg-ink-50 border border-ink-100 p-3 text-xs text-ink-600 dark:bg-white/5 dark:border-white/10 dark:text-white/55">
                     Roles are permanent for the life of this wallet. To switch
                     later you&apos;ll need a different wallet.
                   </div>
                 ) : null}
 
                 {error ? (
-                  <div className="mt-4 rounded-md bg-danger-50 border border-danger-500/30 p-3 text-xs text-danger-700">
+                  <div className="mt-4 rounded-md bg-danger-50 border border-danger-500/30 p-3 text-xs text-danger-700 dark:bg-danger-500/10 dark:text-danger-500">
                     {error}
                   </div>
                 ) : null}
@@ -127,7 +127,7 @@ function Onboarding() {
         </Card>
 
         {user === undefined && isConnected ? (
-          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-ink-500">
+          <div className="mt-4 flex items-center justify-center gap-2 text-xs text-ink-500 dark:text-white/45">
             <Spinner /> Checking wallet…
           </div>
         ) : null}
@@ -154,22 +154,26 @@ function RoleOption({
       className={cn(
         "text-left rounded-md border p-4 transition-colors",
         selected
-          ? "border-brand-500 bg-brand-50/50 ring-1 ring-brand-500/30"
-          : "border-ink-200 bg-white hover:border-ink-300"
+          ? "border-brand-500 bg-brand-50/50 ring-1 ring-brand-500/30 dark:border-accent-400/60 dark:bg-accent-400/10 dark:ring-accent-400/20"
+          : "border-ink-200 bg-white hover:border-ink-300 dark:border-white/12 dark:bg-white/[0.04] dark:hover:border-white/25"
       )}
     >
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-ink-900">{title}</span>
+        <span className="text-sm font-semibold text-ink-900 dark:text-white">
+          {title}
+        </span>
         <span
           className={cn(
             "h-4 w-4 rounded-full border-2",
             selected
-              ? "border-brand-500 bg-brand-500"
-              : "border-ink-300 bg-white"
+              ? "border-brand-500 bg-brand-500 dark:border-accent-400 dark:bg-accent-400"
+              : "border-ink-300 bg-white dark:border-white/30 dark:bg-transparent"
           )}
         />
       </div>
-      <p className="mt-1.5 text-xs text-ink-600 leading-relaxed">{body}</p>
+      <p className="mt-1.5 text-xs text-ink-600 leading-relaxed dark:text-white/55">
+        {body}
+      </p>
     </button>
   );
 }

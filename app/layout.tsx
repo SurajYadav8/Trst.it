@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { SetupBanner } from "@/components/setup-banner";
+import { themeNoFlashScript } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: "Trst.it — Prove you qualify, without revealing why",
@@ -17,7 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeNoFlashScript }} />
+      </head>
       <body className="min-h-screen flex flex-col">
         <Providers>
           <SetupBanner />

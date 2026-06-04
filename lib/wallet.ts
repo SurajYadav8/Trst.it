@@ -39,10 +39,10 @@ export function initAppKit() {
       email: false,
       socials: false,
     },
-    themeMode: "light",
+    themeMode: "dark",
     themeVariables: {
-      "--w3m-accent": "#3a66f5",
-      "--w3m-border-radius-master": "8px",
+      "--w3m-accent": "#06b6d4",
+      "--w3m-border-radius-master": "10px",
     },
   });
   return appKitInstance;

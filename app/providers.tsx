@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import type { Config } from "wagmi";
 import { initAppKit, wagmiConfig } from "@/lib/wallet";
+import { ThemeProvider } from "@/lib/theme";
 
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL ?? "";
 const convex = new ConvexReactClient(convexUrl || "https://placeholder.convex.cloud");
@@ -28,10 +29,12 @@ export function Providers({ children }: { children: ReactNode }) {
   );
 
   return (
-    <WagmiProvider config={wagmiConfig as unknown as Config}>
-      <QueryClientProvider client={queryClient}>
-        <ConvexProvider client={convex}>{children}</ConvexProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <ThemeProvider>
+      <WagmiProvider config={wagmiConfig as unknown as Config}>
+        <QueryClientProvider client={queryClient}>
+          <ConvexProvider client={convex}>{children}</ConvexProvider>
+        </QueryClientProvider>
+      </WagmiProvider>
+    </ThemeProvider>
   );
 }
