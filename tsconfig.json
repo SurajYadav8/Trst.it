@@ -31,6 +31,8 @@
   ],
   "exclude": [
     "node_modules",
+    "contracts",
+    "testsprite_tests",
     "convex/users.ts",
     "convex/profiles.ts",
     "convex/requests.ts",

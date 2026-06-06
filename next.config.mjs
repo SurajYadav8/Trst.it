@@ -24,6 +24,7 @@ const nextConfig = {
       "@base-org/account/dist/index.js": false,
       "@base-org/account/dist/index.node.js": false,
       "@wagmi/core/tempo": false,
+      "@react-native-async-storage/async-storage": false,
     };
     config.plugins = config.plugins || [];
     config.plugins.push(
