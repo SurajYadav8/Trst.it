@@ -23,6 +23,8 @@ import { useEip1193Provider } from "@/lib/use-eip1193";
 import { ensureFheReady } from "@/lib/fhe";
 import { isContractConfigured, runVerification } from "@/lib/contract";
 import { ACTIVE_CHAIN } from "@/lib/constants";
+import { isInsufficientFundsError } from "@/lib/testnet-balance";
+import { useOnchainActionGuard } from "@/lib/use-onchain-action-guard";
 import {
   formatAddress,
   formatMoney,
@@ -74,6 +76,7 @@ function VerifyByCslug({ slug }: { slug: string }) {
   );
 
   const recordResult = useMutation(api.results.record);
+  const { guardAction, showNotice, notice } = useOnchainActionGuard();
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
@@ -154,9 +157,22 @@ function VerifyByCslug({ slug }: { slug: string }) {
       setPhase("done");
       router.push(`/results/${resultId}`);
     } catch (e) {
+      if (isInsufficientFundsError(e)) {
+        showNotice();
+      }
       setPhase("error");
-      setError(e instanceof Error ? e.message : "Verification failed.");
+      setError(
+        isInsufficientFundsError(e)
+          ? "Your wallet needs a small amount of testnet ETH for gas. Use Get Test ETH in the notice, then try again."
+          : e instanceof Error
+            ? e.message
+            : "Verification failed."
+      );
     }
+  };
+
+  const handleRunWithGuard = () => {
+    void guardAction(() => handleRun(), { requiresOnchain: isContractConfigured() });
   };
 
   const busy =
@@ -264,7 +280,7 @@ function VerifyByCslug({ slug }: { slug: string }) {
                       </Button>
                       <Button
                         variant="secondary"
-                        onClick={handleRun}
+                        onClick={handleRunWithGuard}
                         loading={busy}
                       >
                         Re-run
@@ -306,7 +322,11 @@ function VerifyByCslug({ slug }: { slug: string }) {
             </CardBody>
             {isConnected && user?.role === "tenant" && profile && !existingResult ? (
               <CardFooter className="flex justify-end">
-                <Button onClick={handleRun} loading={busy} disabled={!walletProvider}>
+                <Button
+                  onClick={handleRunWithGuard}
+                  loading={busy}
+                  disabled={!walletProvider}
+                >
                   Run verification
                 </Button>
               </CardFooter>
@@ -338,6 +358,7 @@ function VerifyByCslug({ slug }: { slug: string }) {
           </Card>
         </aside>
       </div>
+      {notice}
     </Container>
   );
 }

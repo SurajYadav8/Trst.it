@@ -14,6 +14,9 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { openAppKit } from "@/lib/wallet";
 import { formatAddress } from "@/lib/format";
+import { FhenixLogo } from "@/components/fhenix-logo";
+import { GetTestEthButton } from "@/components/get-test-eth-button";
+import { TestnetSetupNotice } from "@/components/testnet-setup-notice";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Spinner } from "@/components/ui/spinner";
 
@@ -144,11 +147,8 @@ export default function LandingPage() {
                   className="mt-10 flex items-center gap-2 text-[0.7rem] uppercase tracking-[0.25em] text-ink-400 dark:text-white/35"
                 >
                   <span className="h-px w-6 bg-ink-300/60 dark:bg-white/15" />
-                  <span>
-                    Powered by{" "}
-                    <span className="text-brand-600 dark:text-white/55">
-                      Fhenix
-                    </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    Powered by <FhenixLogo />
                   </span>
                   <span className="h-px w-6 bg-ink-300/60 dark:bg-white/15" />
                 </motion.div>
@@ -186,8 +186,9 @@ export default function LandingPage() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.3, ease }}
-                        className="flex justify-center"
+                        className="flex w-full flex-col items-center gap-6"
                       >
+                        <TestnetSetupNotice />
                         <button
                           type="button"
                           disabled={!entryReady}
@@ -403,7 +404,7 @@ function Wordmark({
   interactionsEnabled: boolean;
 }) {
   const bracket =
-    "select-none font-light leading-none text-ink-300/80 dark:text-white/20 text-[0.5em]";
+    "select-none font-light leading-none text-ink-300/80 dark:text-white/20 text-[1em]";
 
   return (
     <motion.div
@@ -413,7 +414,7 @@ function Wordmark({
       className="flex cursor-default select-none items-center justify-center gap-[0.22em] text-[clamp(2.6rem,9vw,7rem)] font-semibold leading-none"
     >
       <span aria-hidden="true" className={bracket}>
-        &lt;
+        {"{"}
       </span>
 
       <span aria-hidden="true" className="flex items-end font-mono tracking-tight">
@@ -430,7 +431,7 @@ function Wordmark({
       </span>
 
       <span aria-hidden="true" className={bracket}>
-        &gt;
+        {"}"}
       </span>
     </motion.div>
   );
@@ -471,7 +472,8 @@ function LandingHeader({
         Tr<span className="text-accent-500 dark:text-accent-400">*</span>st.it
       </Link>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <GetTestEthButton showHoverInfo />
         <ThemeToggle />
         {isConnected && address ? (
           <button

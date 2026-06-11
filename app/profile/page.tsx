@@ -20,6 +20,8 @@ import { useEip1193Provider } from "@/lib/use-eip1193";
 import { encryptProfile, ensureFheReady } from "@/lib/fhe";
 import { submitProfileOnChain, isContractConfigured } from "@/lib/contract";
 import { ACTIVE_CHAIN, CREDIT_MIN, SALARY_MAX } from "@/lib/constants";
+import { isInsufficientFundsError } from "@/lib/testnet-balance";
+import { useOnchainActionGuard } from "@/lib/use-onchain-action-guard";
 import { TENANT_EMPLOYMENT_OPTIONS } from "@/lib/employment-duration";
 
 type Currency = "INR" | "USD";
@@ -116,6 +118,7 @@ function ProfileWizard() {
     address ? { walletAddress: address.toLowerCase() } : "skip"
   );
   const upsert = useMutation(api.profiles.upsert);
+  const { guardAction, showNotice, notice } = useOnchainActionGuard();
 
   const hasExisting = existing !== undefined && existing !== null;
 
@@ -260,9 +263,18 @@ function ProfileWizard() {
       await sleep(750);
       setStep("success");
     } catch (e) {
+      if (isInsufficientFundsError(e)) {
+        showNotice();
+      }
       setError(mapProfileError(e));
       setStep("review");
     }
+  };
+
+  const handleEncryptWithGuard = () => {
+    void guardAction(() => handleEncrypt(), {
+      requiresOnchain: isContractConfigured(),
+    });
   };
 
   if (existing === undefined) {
@@ -348,7 +360,7 @@ function ProfileWizard() {
                 switching={switching}
                 onSwitchChain={() => switchChain({ chainId: ACTIVE_CHAIN.id })}
                 onBack={() => setStep("employment")}
-                onEncrypt={handleEncrypt}
+                onEncrypt={handleEncryptWithGuard}
                 canEncrypt={
                   !!walletProvider &&
                   !!publicClient &&
@@ -372,6 +384,7 @@ function ProfileWizard() {
           )}
         </AnimatePresence>
       </div>
+      {notice}
     </Container>
   );
 }
@@ -919,6 +932,19 @@ function mapProfileError(err: unknown): ProfileError {
     return {
       title: "Network Error",
       message: "Unable to connect to the network.",
+    };
+  }
+
+  if (
+    lower.includes("insufficient funds") ||
+    lower.includes("insufficient balance") ||
+    lower.includes("not enough funds") ||
+    lower.includes("exceeds balance")
+  ) {
+    return {
+      title: "Insufficient test ETH",
+      message:
+        "Your wallet needs a small amount of testnet ETH for gas. Use Get Test ETH in the notice, then try again.",
     };
   }
 

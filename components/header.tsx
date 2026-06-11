@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Container } from "@/components/ui/container";
 import { WalletConnectButton } from "@/components/wallet-connect";
+import { GetTestEthButton } from "@/components/get-test-eth-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/format";
@@ -89,6 +90,7 @@ export function Header() {
               {role}
             </span>
           ) : null}
+          <GetTestEthButton />
           <ThemeToggle />
           <WalletConnectButton size="sm" />
         </div>
