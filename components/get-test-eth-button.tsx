@@ -7,6 +7,8 @@ import { cn } from "@/lib/format";
 type GetTestEthButtonProps = {
   className?: string;
   size?: "sm" | "md";
+  /** Stronger styling for the landing hero card. */
+  emphasized?: boolean;
   /** Show a styled info panel on hover (landing header). */
   showHoverInfo?: boolean;
 };
@@ -14,6 +16,7 @@ type GetTestEthButtonProps = {
 export function GetTestEthButton({
   className,
   size = "sm",
+  emphasized = false,
   showHoverInfo = false,
 }: GetTestEthButtonProps) {
   const faucetUrl = getTestnetFaucetUrl(ACTIVE_CHAIN.id);
@@ -26,7 +29,10 @@ export function GetTestEthButton({
         window.open(faucetUrl, "_blank", "noopener,noreferrer")
       }
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-accent-400/30 bg-accent-400/[0.07] font-medium text-accent-700 backdrop-blur-sm transition-all hover:border-accent-400/50 hover:bg-accent-400/12 hover:shadow-glow-sm dark:border-accent-400/25 dark:bg-accent-400/[0.08] dark:text-accent-200 dark:hover:border-accent-400/40",
+        "inline-flex items-center gap-1.5 rounded-full border font-medium backdrop-blur-sm transition-all",
+        emphasized
+          ? "border-accent-400/50 bg-accent-400/15 text-brand-700 shadow-glow-sm hover:border-accent-400/70 hover:bg-accent-400/20 hover:shadow-glow dark:border-accent-400/45 dark:bg-accent-400/15 dark:text-accent-100 dark:hover:border-accent-400/60"
+          : "border-accent-400/30 bg-accent-400/[0.07] text-accent-700 hover:border-accent-400/50 hover:bg-accent-400/12 hover:shadow-glow-sm dark:border-accent-400/25 dark:bg-accent-400/[0.08] dark:text-accent-200 dark:hover:border-accent-400/40",
         size === "sm" ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-sm",
         className
       )}

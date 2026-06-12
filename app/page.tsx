@@ -196,7 +196,7 @@ export default function LandingPage() {
                           className="group inline-flex items-center gap-2 rounded-full border border-ink-200 bg-white px-7 py-3 text-sm font-medium text-ink-800 shadow-[0_1px_2px_rgba(15,18,24,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#001623] hover:bg-[#001623] hover:text-white hover:shadow-glow-sm disabled:cursor-default disabled:opacity-0 dark:border-white/15 dark:bg-white/[0.03] dark:text-white/80 dark:shadow-none dark:backdrop-blur-sm dark:hover:border-[#001623] dark:hover:bg-[#001623] dark:hover:text-white"
                         >
                           <span className="h-1.5 w-1.5 rounded-full bg-accent-500 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
-                          Connect wallet to enter
+                          Connect wallet
                         </button>
                       </motion.div>
                     )}

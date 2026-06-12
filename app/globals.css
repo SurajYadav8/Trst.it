@@ -117,9 +117,108 @@ w3m-modal {
   );
 }
 
+/* Traveling cyan beam — oversized spinner clipped by rounded overflow (smooth corners). */
+.testnet-notice-beam {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  padding: 2px;
+}
+
+.testnet-notice-beam__spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 220%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: transform;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 288deg,
+    rgba(6, 182, 212, 0.5) 304deg,
+    #0891b2 316deg,
+    #22d3ee 324deg,
+    #a5f3fc 330deg,
+    #22d3ee 336deg,
+    rgba(6, 182, 212, 0.5) 348deg,
+    transparent 360deg
+  );
+  animation: testnet-border-travel 4s linear infinite;
+}
+
+.dark .testnet-notice-beam__spinner {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 294deg,
+    rgba(34, 211, 238, 0.18) 308deg,
+    rgba(34, 211, 238, 0.95) 320deg,
+    #67e8f9 328deg,
+    rgba(34, 211, 238, 0.95) 336deg,
+    rgba(34, 211, 238, 0.18) 350deg,
+    transparent 360deg
+  );
+}
+
+.testnet-notice-beam__inner {
+  position: relative;
+  z-index: 1;
+  border-radius: calc(0.75rem - 2px);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px rgb(34 211 238 / 0.22),
+    0 0 32px -4px rgb(34 211 238 / 0.48);
+}
+
+.dark .testnet-notice-beam__inner {
+  background: rgb(10 12 14 / 0.98);
+  box-shadow:
+    0 0 0 1px rgb(34 211 238 / 0.14),
+    0 0 36px -6px rgb(34 211 238 / 0.5);
+}
+
+@keyframes testnet-border-travel {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Verification result cards — transform hover (global * transition excludes transform). */
+.verification-result-card {
+  transition:
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.verification-result-card:hover {
+  transform: translateY(-4px) scale(1.015);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-grid-drift,
   .animate-pulse-glow {
     animation: none !important;
+  }
+
+  .testnet-notice-beam__spinner {
+    animation: none;
+    width: 100%;
+    inset: 0;
+    left: 0;
+    top: 0;
+    transform: none;
+    background: rgb(34 211 238 / 0.4);
+  }
+
+  .verification-result-card,
+  .verification-result-card:hover {
+    transform: none;
+    transition: border-color 280ms ease, box-shadow 280ms ease;
   }
 }

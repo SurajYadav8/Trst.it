@@ -2,6 +2,10 @@
 export const PRIMARY_CARD_CLASS =
   "border-accent-400/20 shadow-glow-sm dark:border-accent-400/15";
 
+/** Individual tenant verification result cards on the dashboard. */
+export const VERIFICATION_ITEM_CARD_CLASS =
+  "verification-result-card border-accent-400/25 shadow-soft hover:border-accent-400/55 hover:shadow-glow dark:border-accent-400/20 dark:shadow-none dark:hover:border-accent-400/45 dark:hover:shadow-glow-sm";
+
 /** Supporting panels — stats, journey, privacy, sidebars. */
 export const SECONDARY_CARD_CLASS =
   "border-accent-400/12 bg-ink-50/25 shadow-glow-sm dark:border-accent-400/10 dark:bg-white/[0.015]";
